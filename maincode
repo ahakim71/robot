@@ -1,0 +1,92 @@
+//Code for Fighting Robot project for 2nd Year Engineering at Uni of Leicester 
+//Arduino and C++
+//Code written in 2021
+
+// channel values
+int ch1; //accelerating control
+int ch2; //turning control
+
+// receiver input pins
+int pin1 = 2;
+int pin2 = 3;
+
+//PWM output pins
+int pin3 = 9;  // right motor
+int pin4 = 11; //left motor
+int LED = 13; // LED output
+
+
+void setup {
+Serial.begin(9600); //Serial data transmission rate
+pinMode(pin1, INPUT);
+pinMode(pin2, INPUT);
+pinMode(pin3, OUTPUT);
+pinMode(pin4, OUTPUT);
+pinMode(LED, OUTPUT);
+
+}
+
+void loop{
+ch1 = pulseIn(5, HIGH,25000); // Read the pulse width of 
+ch2 = pulseIn(6, HIGH,25000); // each channel
+
+acc = map(ch1);
+acc = constrain(acc, -255, 255);
+
+turn = map(ch2);
+turn = constrain(turn, -255,255);
+
+if(acc>0 and turn = 0){
+MoveForward();
+}
+
+if (acc<0 and turn = 0) {
+MoveBackwards();
+}
+
+if (acc>0 and turn > 0) {
+MoveRight();
+}
+
+if (acc>0 and turn < 0) {
+MoveLeft();
+}
+
+}
+
+
+void MoveForward() {
+analogWrite(pin3, acc);     
+analogWrite(pin4, acc);   
+digitalWrite(LED, HIGH);   
+}
+
+void MoveBackwards() {
+analogWrite(pin3, acc );      //
+analogWrite(pin4, acc);  
+digitalWrite(LED, HIGH);   
+}
+
+void MoveLeft (){
+analogWrite(pin3, acc);     
+analogWrite(pin4, acc - turn );  
+digitalWrite(LED, HIGH);   
+}
+
+void MoveRight(){
+analogWrite(pin3, acc-turn);     
+analogWrite(pin4, acc);  
+digitalWrite(LED, HIGH);   
+}
+
+void MoveLeftBackwards (){
+analogWrite(pin3, acc);     
+analogWrite(pin4, acc - turn );  
+digitalWrite(LED, HIGH);   
+}
+
+void MoveRightBackwards(){
+analogWrite(pin3, acc-turn);     
+analogWrite(pin4, acc);  
+digitalWrite(LED, HIGH);   
+}
